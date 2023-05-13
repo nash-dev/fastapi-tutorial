@@ -8,13 +8,11 @@ from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from mangum import Mangum
 
-
 class Book(BaseModel):
     name: str
     genre: Literal["fiction", "non-fiction"]
     price: float
     book_id: Optional[str] = uuid4().hex
-
 
 BOOKS_FILE = "books.json"
 BOOKS = []
@@ -26,7 +24,6 @@ if os.path.exists(BOOKS_FILE):
 app = FastAPI()
 handler = Mangum(app)
 
-
 @app.get("/")
 async def root():
     return {"message": "Welcome to my bookstore app!"}
@@ -36,11 +33,9 @@ async def root():
 async def random_book():
     return random.choice(BOOKS)
 
-
 @app.get("/list-books")
 async def list_books():
     return {"books": BOOKS}
-
 
 @app.get("/book_by_index/{index}")
 async def book_by_index(index: int):
